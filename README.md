@@ -1,5 +1,5 @@
 
-# Less Data MoreStories
+# Less Data, More Stories
 
 ![lessdatamorestories.com](./lessDmoreS_B.gif)
 
