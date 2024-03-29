@@ -1,0 +1,12 @@
+~$data_to_graph.xlsx
+books/*
+~$datastorytelling_intro.pptx
+data/data_to_graph.xlsx
+data/jobs_ridgeline-by-text.png
+data/job_descriptions.csv
+data/Fonts/*
+images/*
+*.pyc
+*.pptx
+*.DS_Store
+*.pdf
