@@ -51,6 +51,10 @@ def plot_slope(df, config):
     Configuration Parameters:
     - title1 (str): The main title of the plot.
     - title2 (str): The subtitle of the plot.
+    - title1_x (float, optional): The x-coordinate of the main title. Default is 0.1.
+    - title1_y (float, optional): The y-coordinate of the main title. Default is 0.95.
+    - title2_x (float, optional): The x-coordinate of the subtitle. Default is 0.1.
+    - title2_y (float, optional): The y-coordinate of the subtitle. Default is 0.90.
     - shift_up (float, optional): The vertical shift of the labels. Default is 2.
     - shift_left (float, optional): The horizontal shift of the labels. Default is 0.5.
     - xaxis_margin (float, optional): The margin added to the x-axis limits. Default is 0.8.
@@ -62,6 +66,8 @@ def plot_slope(df, config):
     - default_color (str, optional): The default color for the slope lines. Default is "#bdbdbd".
     - highlight_color (str, optional): The color for the highlighted line. Default is "#4D77B1".
     - filepath (str, optional): The file path to save the plot. Default is False.
+    - start_label (bool, optional): Whether to show labels at the start of the lines. Default is True.
+    - end_label (bool, optional): Whether to show labels at the end of the lines. Default is True.
 
     Returns:
     None
@@ -74,6 +80,12 @@ def plot_slope(df, config):
     #Title and subtitle
     title1 = config['title1']
     title2 = config['title2']
+    fontsize_title1 = config.get('fontsize_title1', 16)
+    fontsize_title2 = config.get('fontsize_title2', 14)
+    title1_x = config.get('title1_x', 0.1)
+    title1_y = config.get('title1_y', 0.95)
+    title2_x = config.get('title2_x', 0.1)
+    title2_y = config.get('title2_y', 0.90)
 
     #Get config or set to default
     shift_up = config.get('shift_up', 2)
@@ -87,6 +99,8 @@ def plot_slope(df, config):
     default_color = config.get('default_color', "#bdbdbd")
     hihglight_color = config.get('highlight_color', "#4D77B1")
     filepath = config.get('filepath', False)
+    start_label = config.get('start_label', True)
+    end_label = config.get('end_label', True)
    
     ##Plot each slope line
     for line in lines_to_plot:
@@ -98,16 +112,19 @@ def plot_slope(df, config):
             color=second_highlight_color
             shift_left = shift_left
         ax.plot(temp.index,  temp.values, color= color, marker='o', markersize=8)
-        # end label
-        ax.text(temp.index[0]-shift_left, 
+        # start label
+        if start_label:
+            ax.text(temp.index[0]-shift_left, 
                 temp.values[0]+shift_up, 
                 line, 
-                color = color)
-        # start label
-        ax.text(temp.index[-1]+shift_left, 
+                color = color,
+                ha = 'right')
+        # end label
+        if end_label:
+            ax.text(temp.index[-1]+shift_left, 
                 temp.values[-1]+shift_up, 
                 line, 
-                color = color, ha='right')
+                color = color, ha='left')
 
     ##add vertical lines
     ax.xaxis.grid(color=default_color, 
@@ -122,6 +139,7 @@ def plot_slope(df, config):
     ##x limits, x ticks, and y label 
     plt.xlim(df.index[0]-xaxis_margin, 
              df.index[-1].astype(int)+xaxis_margin);
+    
     plt.xticks([df.index[0], df.index[-1]]);
     ax.set_frame_on(False)
     yl = plt.ylim(ylim_bottom, ylim_top)
@@ -132,13 +150,13 @@ def plot_slope(df, config):
             bottom=False)    # ticks along the bottom edge are off)
 
     ##Add in title and subtitle
-    ax.text(x=0.12, y=1, s=title1, 
+    ax.text(x=title1_x, y=title1_y, s=title1, 
             transform=fig.transFigure, 
             ha='left', 
-            fontsize=13, weight='bold', alpha=.8)
-    ax.text(x=0.12, y=0.95, s=title2,
+            fontsize=fontsize_title1, weight='bold', alpha=.8)
+    ax.text(x=title2_x, y=title2_y, s=title2,
             transform=fig.transFigure, 
-            ha='left', fontsize=11, alpha=.8)
+            ha='left', fontsize=fontsize_title2, alpha=.8)
 
     #ax.set_ylabel('Automation (%)')
     def number_formatter(x,pos):
