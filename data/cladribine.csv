@@ -1,0 +1,4 @@
+﻿Treatment;Persistence (median HR);Persistence (lower IQR);Persistence (higher IQR);Persistence (half IQR);First Relapse (median HR);First Relapse (lower IQR);First Relapse (higher IQR);First Relapse (half IQR)
+Fingolimod;4;2.54;6.32;1.89;0.6;0.41;0.88;0.235
+Dimethyl Fumarate ;7.04;4.16;11.93;3.885;0.58;0.37;0.9;0.265
+Teriflunomide ;6.52;3.79;11.22;3.715;0.33;0.21;0.52;0.155
